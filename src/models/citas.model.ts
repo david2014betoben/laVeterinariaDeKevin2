@@ -13,13 +13,20 @@ export const obtenerCitas = async (): Promise<Cita[]> => {
   return result.rows;
 };
 
-export const obtenerCitaPorId = async (id: number): Promise<Cita | undefined> => {
+export const obtenerCitaPorId = async (
+  id: number,
+): Promise<Cita | undefined> => {
   const result = await pool.query("SELECT * FROM citas WHERE id = $1", [id]);
   return result.rows[0];
 };
 
-export const obtenerCitasPorDueno = async (duenoId: number): Promise<Cita[]> => {
-  const result = await pool.query("SELECT * FROM citas WHERE dueno_id = $1 ORDER BY id", [duenoId]);
+export const obtenerCitasPorDueno = async (
+  duenoId: number,
+): Promise<Cita[]> => {
+  const result = await pool.query(
+    "SELECT * FROM citas WHERE dueno_id = $1 ORDER BY id",
+    [duenoId],
+  );
   return result.rows;
 };
 
@@ -29,16 +36,16 @@ export const crearCita = async (data: {
   motivo: string;
 }): Promise<Cita> => {
   // BUG: el metodo se llama "query", no "qeury".
-  const result = await pool.qeury(
+  const result = await pool.query(
     "INSERT INTO citas (dueno_id, mascota_id, motivo) VALUES ($1, $2, $3) RETURNING *",
-    [data.dueno_id, data.mascota_id, data.motivo]
+    [data.dueno_id, data.mascota_id, data.motivo],
   );
   return result.rows[0];
 };
 
 export const actualizarCita = async (
   id: number,
-  data: Partial<{ dueno_id: number; mascota_id: number; motivo: string }>
+  data: Partial<{ dueno_id: number; mascota_id: number; motivo: string }>,
 ): Promise<Cita | undefined> => {
   const actual = await obtenerCitaPorId(id);
   if (!actual) return undefined;
@@ -49,13 +56,13 @@ export const actualizarCita = async (
 
   const result = await pool.query(
     "UPDATE citas SET dueno_id = $1, mascota_id = $2, motivo = $3 WHERE id = $4 RETURNING *",
-    [dueno_id, mascota_id, motivo, id]
+    [dueno_id, mascota_id, motivo, id],
   );
   return result.rows[0];
 };
 
 export const eliminarCita = async (id: number): Promise<boolean> => {
   // BUG: la tabla se llama "citas", no "cita".
-  const result = await pool.query("DELETE FROM cita WHERE id = $1", [id]);
+  const result = await pool.query("DELETE FROM citas WHERE id = $1", [id]);
   return (result.rowCount ?? 0) > 0;
 };
