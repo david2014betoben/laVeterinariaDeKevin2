@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 
-import { swaggerSpec } from "./config/swagger.js";
+import { swaggerSpec } from "../swagger.js";
 import { especiesRouter } from "./controllers/especies.controller.js";
 import { mascotasRouter } from "./controllers/mascotas.controller.js";
 import { duenosRouter } from "./controllers/duenos.controller.js";
@@ -16,7 +16,7 @@ const app = express();
 
 app.use(cors());
 // BUG: "jsonn" no existe en express, esto tumba el servidor al arrancar.
-app.use(express.jsonn());
+app.use(express.json());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

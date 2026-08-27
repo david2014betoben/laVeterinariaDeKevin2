@@ -23,7 +23,7 @@ mascotasRouter.get("/", async (req, res, next) => {
 mascotasRouter.get("/:id", async (req, res, next) => {
   try {
     // BUG: el id llega por la URL (req.params), no por el body.
-    const id = Number((req.body as any).id);
+    const id = Number((req.params as any).id); //---->req.body cambia por req.params
     const mascota = await obtenerMascotaPorId(id);
     if (!mascota) {
       res.status(404).json({ error: "Mascota no encontrada" });
@@ -48,7 +48,7 @@ mascotasRouter.put("/:id", validate(actualizarMascotaSchema), async (req, res, n
   try {
     const id = Number(req.params.id);
     // BUG: la funcion importada se llama "actualizarMascota", no "actualizarMascotas".
-    const mascota = await actualizarMascotas(id, req.body);
+    const mascota = await actualizarMascota(id, req.body);
     if (!mascota) {
       res.status(404).json({ error: "Mascota no encontrada" });
       return;

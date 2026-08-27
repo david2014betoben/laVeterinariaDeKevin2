@@ -26,7 +26,7 @@ CREATE TABLE especies (
 CREATE TABLE mascotas (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    edad INTEGER NOT NULL DEFAULT 0,
+    edad INTEGER NOT NULL DEFAULT 0, --bug permite registar edad negativa¿?, creo que en ninguno impide
     especie_id INTEGER REFERENCES especies(id) ON DELETE SET NULL
 );
 
