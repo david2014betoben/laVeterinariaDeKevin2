@@ -11,5 +11,5 @@
     "skipLibCheck": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*", "swagger.ts"]
+  "include": ["src/**/*", "src/swagger.ts"]
 }
