@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 
-import { swaggerSpec } from "../swagger.js";
+import { swaggerSpec } from "./swagger.js";
 import { especiesRouter } from "./controllers/especies.controller.js";
 import { mascotasRouter } from "./controllers/mascotas.controller.js";
 import { duenosRouter } from "./controllers/duenos.controller.js";

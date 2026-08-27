@@ -56,20 +56,24 @@ citasRouter.post("/", validate(citaSchema), async (req, res, next) => {
   }
 });
 
-citasRouter.put("/:id", validate(actualizarCitaSchema), async (req, res, next) => {
-  try {
-    const id = Number(req.params.id);
-    // BUG: la funcion importada se llama "actualizarCita", no "actualizarCitas".
-    const cita = await actualizarCitas(id, req.body);
-    if (!cita) {
-      res.status(404).json({ error: "Cita no encontrada" });
-      return;
+citasRouter.put(
+  "/:id",
+  validate(actualizarCitaSchema),
+  async (req, res, next) => {
+    try {
+      const id = Number(req.params.id);
+      // BUG: la funcion importada se llama "actualizarCita", no "actualizarCitas".
+      const cita = await actualizarCita(id, req.body);
+      if (!cita) {
+        res.status(404).json({ error: "Cita no encontrada" });
+        return;
+      }
+      res.json(cita);
+    } catch (err) {
+      next(err);
     }
-    res.json(cita);
-  } catch (err) {
-    next(err);
-  }
-});
+  },
+);
 
 citasRouter.delete("/:id", async (req, res, next) => {
   try {

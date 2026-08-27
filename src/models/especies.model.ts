@@ -8,7 +8,7 @@ export interface Especie {
 
 export const obtenerEspecies = async (): Promise<Especie[]> => {
   // BUG: la tabla se llama "especies", no "especie".
-  const result = await pool.query("SELECT * FROM especie ORDER BY id");
+  const result = await pool.query("SELECT * FROM especies ORDER BY id");
   return result.rows;
 };
 
@@ -39,7 +39,7 @@ export const actualizarEspecie = async (
   // asi que nombre y descripcion terminan intercambiados en la base de datos.
   const result = await pool.query(
     "UPDATE especies SET nombre = $1, descripcion = $2 WHERE id = $3 RETURNING *",
-    [descripcion, nombre, id]
+    [nombre, descripcion, id]
   );
   return result.rows[0];
 };
