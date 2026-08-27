@@ -37,7 +37,7 @@ especiesRouter.get("/:id", async (req, res, next) => {
 especiesRouter.post("/", validate(especieSchema), async (req, res, next) => {
   try {
     // BUG: la funcion importada se llama "crearEspecie", no "crearEspecies".
-    const nuevaEspecie = await crearEspecies(req.body);
+    const nuevaEspecie = await crearEspecie(req.body);
     res.status(201).json(nuevaEspecie);
   } catch (err) {
     next(err);

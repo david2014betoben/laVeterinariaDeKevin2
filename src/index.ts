@@ -26,7 +26,9 @@ app.use("/api/duenos", duenosRouter);
 app.use("/api/citas", citasRouter);
 
 app.get("/", (req, res) => {
-  res.json({ mensaje: "Bienvenido a la API de La Veterinaria de Kevin. Ve a /api-docs" });
+  res.json({
+    mensaje: "Bienvenido a la API de La Veterinaria de Kevin. Ve a /api-docs",
+  });
 });
 
 app.use(errorHandler);
