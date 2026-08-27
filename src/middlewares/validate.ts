@@ -8,7 +8,7 @@ export const validate =
 
     if (!resultado.success) {
       // BUG: un body invalido no es un error del servidor, es un error del cliente.
-      res.status(500).json({ error: resultado.error.flatten() });
+      res.status(400).json({ error: resultado.error.issues});
       return;
     }
 
