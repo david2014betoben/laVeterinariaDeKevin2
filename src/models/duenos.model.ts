@@ -12,7 +12,9 @@ export const obtenerDuenos = async (): Promise<Dueno[]> => {
   return result.rows;
 };
 
-export const obtenerDuenoPorId = async (id: number): Promise<Dueno | undefined> => {
+export const obtenerDuenoPorId = async (
+  id: number,
+): Promise<Dueno | undefined> => {
   const result = await pool.query("SELECT * FROM duenos WHERE id = $1", [id]);
   return result.rows[0];
 };
@@ -25,15 +27,15 @@ export const crearDueno = async (data: {
   // BUG: la columna "telefono" no esta en el INSERT, asi que aunque el
   // dueno la mande siempre se guarda como null.
   const result = await pool.query(
-    "INSERT INTO duenos (nombre, email) VALUES ($1, $2) RETURNING *",
-    [data.nombre, data.email, data.telefono ?? null]
+    "INSERT INTO duenos (nombre, email, telefono) VALUES ($1, $2, $3) RETURNING *",
+    [data.nombre, data.email, data.telefono ?? null],
   );
   return result.rows[0];
 };
 
 export const actualizarDueno = async (
   id: number,
-  data: Partial<{ nombre: string; email: string; telefono: string }>
+  data: Partial<{ nombre: string; email: string; telefono: string }>,
 ): Promise<Dueno | undefined> => {
   const actual = await obtenerDuenoPorId(id);
   if (!actual) return undefined;
@@ -44,7 +46,7 @@ export const actualizarDueno = async (
 
   const result = await pool.query(
     "UPDATE duenos SET nombre = $1, email = $2, telefono = $3 WHERE id = $4 RETURNING *",
-    [nombre, email, telefono, id]
+    [nombre, email, telefono, id],
   );
   return result.rows[0];
 };
